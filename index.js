@@ -97,10 +97,13 @@ async function sendDiscordAlert(alertText, url) {
 //start the bot
 console.log("Star Citizen Web Scraper Tracker initialized.");
 
-// run immediately on start up for testing 
+// run immediately on start up
 checkForFreeFly();
 
-//schedule to run once every 3 days at midnight
-cron.schedule("0 0 */3 * *", () => {
-    checkForFreeFly();
-})
+// Nếu chạy trên local → dùng node-cron để lặp lại mỗi 3 ngày
+// Nếu chạy trên GitHub Actions (CI=true) → chỉ chạy 1 lần rồi thoát
+if (!process.env.CI) {
+    cron.schedule("0 0 */3 * *", () => {
+        checkForFreeFly();
+    });
+}
