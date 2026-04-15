@@ -1,0 +1,28 @@
+name: Star Citizen Free Fly Checker
+
+on: 
+  schedule: 
+    # Chạy vào lúc 00:00 UTC (07:00 sáng VN), cứ mỗi 3 ngày
+    - cron: '0 0 */3 * *'
+  workflow_dispatch: # Cho phép bạn bấm nút chạy thử thủ công
+
+jobs: 
+  check-free-fly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run bot
+        env:
+          # Lấy Webhook từ Secrets đã cài ở bước 1
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: node index.js
