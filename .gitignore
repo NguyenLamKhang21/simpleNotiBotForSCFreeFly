@@ -1,0 +1,5 @@
+# Bỏ qua file chứa thông tin bảo mật
+.env
+
+# Bỏ qua thư mục chứa các thư viện tải về (rất nặng, không nên push)
+node_modules/
